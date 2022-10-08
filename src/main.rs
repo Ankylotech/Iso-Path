@@ -1,3 +1,7 @@
+use game::IsoPath;
+pub mod game;
+
 fn main() {
-    println!("Hello, world!");
+    let mut board = IsoPath::new();
+    board.print_board();
 }
