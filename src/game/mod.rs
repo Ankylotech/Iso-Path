@@ -67,6 +67,18 @@ impl IsoPath {
         Ok(String::new())
     }
 
+    pub fn game_state(&self) -> GameState {
+        for i in 0..4 {
+            if self.board[i] == Tile::Low(true) {
+                return GameState::BottomWin;
+            }
+            if self.board[33+i] == Tile::High(true) {
+                return GameState::TopWin;
+            }
+        }
+        GameState::Ongoing
+    }
+
     fn execute_move(&mut self, mov: Move) {
         match mov {
             Move::TileMove(m1,m2) => {
@@ -218,6 +230,13 @@ impl IsoPath {
 }
 
 #[derive(PartialEq, Eq,Clone, Copy)]
+pub enum GameState {
+    Ongoing,
+    TopWin,
+    BottomWin,
+}
+
+#[derive(PartialEq, Eq,Clone, Copy)]
 enum Player {
     Top,
     Bottom,
@@ -355,13 +374,6 @@ impl Tile {
             Self::High(b) => Self::High(!*b),
             Self::Low(b) => Self::Low(!*b),
             _ =>*self,
-        }
-    }
-    fn occupied(&self) -> bool {
-        match self {
-            Self::High(b) => *b,
-            Self::Low(b) => *b,
-            Self::Normal => false,
         }
     }
 }

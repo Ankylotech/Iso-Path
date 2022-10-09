@@ -30,6 +30,29 @@ fn main() {
             },
             Err(e) => println!("{}",e),
         }
-
+        let mut line = String::new();
+        match board.game_state() {
+            game::GameState::BottomWin => {
+                println!("The bottom player has won");
+                println!("Do you want to restart?");
+                let ok = stdin.read_line(&mut line).is_ok();
+                if line.eq("stop") || !ok || line.eq("no") {
+                    break;
+                }
+                board = IsoPath::new();
+                board.print_board();
+            }   
+            game::GameState::TopWin => {
+                println!("The top player has won");
+                println!("Do you want to restart?");
+                let ok = stdin.read_line(&mut line).is_ok();
+                if line.eq("stop") || !ok || line.eq("no") {
+                    break;
+                }
+                board = IsoPath::new();
+                board.print_board();
+            }
+            _ => (),
+        }
     }
 }

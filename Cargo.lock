@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "Iso-Path"
+name = "iso_path"
 version = "0.1.0"
